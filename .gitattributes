@@ -9,3 +9,23 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Tell GitHub Linguist how to classify files for language stats
+
+# Treat PHP and Blade as PHP
+*.php linguist-language=PHP
+*.blade.php linguist-language=PHP
+
+# Ignore compiled/vendor CSS & JS
+public/*.css linguist-vendored
+public/*.js linguist-vendored
+resources/css/* linguist-vendored
+resources/js/* linguist-vendored
+node_modules/* linguist-vendored
+
+# Ignore minified files
+*.min.js linguist-vendored
+*.min.css linguist-vendored
+
+# Ignore vendor dependencies
+/vendor/* linguist-vendored
