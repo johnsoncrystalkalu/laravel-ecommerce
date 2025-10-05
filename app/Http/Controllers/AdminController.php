@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Pest\Mutate\Mutators\Visibility\FunctionPublicToProtected;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -128,6 +130,28 @@ class AdminController extends Controller
         ->paginate(2);
 
         return view('admin.viewproduct', compact('product'));
+    }
+
+    public function viewOrder(){
+        $orders = Order::paginate(10);
+
+        return view ('admin.vieworders', compact('orders'));
+    }
+
+    public function postChangeOrderStatus(Request $request, $id){
+
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return redirect()->back()->with('message', 'order changed successfully');
+    }
+
+    public function downloadPDF($id){
+        $orders = Order::findOrFail(($id));
+        $data = $orders;
+        $pdf = Pdf::loadView('admin.invoice', compact('data'));
+        return $pdf->download('invoice.pdf');
     }
 }
 

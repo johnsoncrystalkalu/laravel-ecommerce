@@ -41,6 +41,8 @@
                                         Remove from cart
                                     </button>
                                 </form>
+                                <br/>&nbsp;
+                                <a href="" class="btn btn-sm btn-success">pay now</a>
                                 @else
                                 <a href="{{route('addtocart', $product->id)}}" class="btn btn-primary">Add to Cart</a>
                                 @endif

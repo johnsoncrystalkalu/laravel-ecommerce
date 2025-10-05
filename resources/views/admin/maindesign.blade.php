@@ -107,11 +107,11 @@
                   </ul>
                 </li>
 
-                <li><a href="#product" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Product </a>
+                <li><a href="#product" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Products </a>
                     <ul id="product" class="collapse list-unstyled ">
                       <li><a href="{{route('admin.addproduct')}}">Add Product</a></li>
-                      <li><a href="{{route('admin.viewproduct')}}">View Product</a></li>
-                      <li><a href="{{route('admin.viewcategory')}}">View Orders</a></li>
+                      <li><a href="{{route('admin.viewproduct')}}">View Products</a></li>
+                      <li><a href="{{route('admin.vieworders')}}">View Orders</a></li>
                     </ul>
                   </li>
 

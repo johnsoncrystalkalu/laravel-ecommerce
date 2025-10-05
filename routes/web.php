@@ -33,6 +33,14 @@ Route::middleware('admin')->group(function(){
 
     Route::any('/search-product', [AdminController::class, 'postSearchProduct'])->name('admin.searchproduct');
 
+    Route::get('/view-orders', [AdminController::class, 'viewOrder'])->name('admin.vieworders');
+
+    Route::post('/change-order-status/{id}', [AdminController::class, 'postChangeOrderStatus'])->name('admin.changeorderstatus');
+
+
+    Route::get('/downloadpdf/{id}', [AdminController::class, 'downloadPDF'])->name('admin.downloadpdf');
+
+
 });
 
 
@@ -45,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('cart-products', [UserController::class, 'cartProducts'])->name('cart.products');
     Route::delete('/delete-cart/{id}', [UserController::class, 'deleteCart'])->name('delete.cart');
     Route::post('confirm-order', [UserController::class, 'confirmOrder'])->name('confirm.order');
+
+    Route::get('myorders', [UserController::class, 'myOrders'])->name('myorders');
 
 });
 
