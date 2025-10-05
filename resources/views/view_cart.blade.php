@@ -23,12 +23,14 @@
                     </tr>
                   </thead>
                   <tbody>
-
+                    @php
+                        $price = 0;
+                    @endphp
                     @foreach ($cart as $cart_products)
                     <tr>
                       <td><a href="{{route('product', $cart_products->product->id)}}" >{{$cart_products->product->product_title}}</a></td>
                       <td>{{$cart_products->product->product_price}}</td>
-                      <td><img src="{{asset('products/'.$cart_products->product->product_image)}}" height="200"/></td>
+                      <td><img src="{{asset('products/'.$cart_products->product->product_image)}}" height="80"/></td>
                 <td>
                         <form action="{{ route('delete.cart', $cart_products->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -39,11 +41,23 @@
                     </form>
                 </td>
                     </tr>
+                    @php
+                    $price = $price + $cart_products->product->product_price;
+                    @endphp
                     @endforeach
+                    <tr style="background: silver">
+                        <td class="">Total</td>
+                        <td><b>USD {{$price}}</b></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
-
+              <form action="{{route('confirm.order')}}" method="POST">
+                @csrf
+                <input type="text" name="reciever_address" placeholder="Enter address" class="form-control" required/>
+                <input type="text" name="reciever_phone" placeholder="Enter Phone" class="form-control mt-2" required/>
+                <input type="submit" name="submit" value="confirm order" class="btn btn-success mt-2"/>
+            </form>
         </div>
     </div>
 </div>

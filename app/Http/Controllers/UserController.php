@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCart;
 use Illuminate\Http\Request;
@@ -68,5 +69,35 @@ class UserController extends Controller
         else{
             abort(402, 'Unathorized');
         }
+    }
+
+    public function confirmOrder(Request $request){
+
+        $cart_product_id = ProductCart::where('user_id', Auth::id())->get();
+
+        $address = $request->reciever_address;
+        $phone = $request->reciever_phone;
+
+        foreach($cart_product_id as $cart_product){
+            $order = new Order();
+            $order->reciever_address = $address;
+            $order->reciever_phone = $phone;
+            $order->product_id = $cart_product->product_id;
+            $order->user_id = Auth::id();
+            $order->save();
+        }
+
+        $cart = ProductCart::where('user_id', Auth::id())->get();
+        foreach($cart as $cart){
+            $cart_id = ProductCart::findOrFail($cart->id);
+            $cart->delete();
+        }
+
+        return redirect()->back()->with('message', 'Order Confirmed');
+
+
+
+
+
     }
 }

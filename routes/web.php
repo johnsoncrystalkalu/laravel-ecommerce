@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('addtocart/{id}', [UserController::class, 'addToCart'])->name('addtocart');
     Route::get('cart-products', [UserController::class, 'cartProducts'])->name('cart.products');
     Route::delete('/delete-cart/{id}', [UserController::class, 'deleteCart'])->name('delete.cart');
-
+    Route::post('confirm-order', [UserController::class, 'confirmOrder'])->name('confirm.order');
 
 });
 
