@@ -6,6 +6,18 @@
       <div class="row">
         <!-- Basic Form-->
         <div class="col-lg-12">
+
+            <div class="search-panel">
+                <div 1class="search-inner d-flex align-items-center justify-content-center">
+                  <form id="searchForm" action="{{route('admin.searchproduct')}}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                      <input type="search" name="search" class="form-control" placeholder="search product...">
+                      <button type="submit" class="btn btn-default" class="submit">Search</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             <div class="block margin-bottom-sm">
               <div class="title"><strong>Product Table</strong></div>
               @if (session('message'))
@@ -31,7 +43,7 @@
                     <tr>
                       <th scope="row">{{$products->id}}</th>
                       <td>{{$products->product_title}}</td>
-                      <td>{{$products->product_description}}</td>
+                      <td>{{Str::limit($products->product_description, 120)}}</td>
                       <td>{{$products->product_category}}</td>
                       <td>{{$products->product_quantity}}</td>
                       <td>{{$products->product_price}}</td>

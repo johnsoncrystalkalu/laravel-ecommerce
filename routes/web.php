@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DemoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ProfileController;
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [UserController::class, 'home'])->name('index');
 
 Route::get('/dashboard', [UserController::class, 'index'] )->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -31,6 +31,8 @@ Route::middleware('admin')->group(function(){
     Route::get('/update-product/{id}', [AdminController::class, 'updateProduct'])->name('admin.updateproduct');
     Route::post('/update-product/{id}', [AdminController::class, 'postUpdateProduct'])->name('admin.postupdateproduct');
 
+    Route::any('/search-product', [AdminController::class, 'postSearchProduct'])->name('admin.searchproduct');
+
 });
 
 
@@ -38,6 +40,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('addtocart/{id}', [UserController::class, 'addToCart'])->name('addtocart');
+    Route::get('cart-products', [UserController::class, 'cartProducts'])->name('cart.products');
+    Route::delete('/delete-cart/{id}', [UserController::class, 'deleteCart'])->name('delete.cart');
+
+
 });
+
+
+Route::get('/product/{id}', [UserController::class, 'ProductDetails'])->name('product');
+
+Route::get('view-allproducts', [UserController::class, 'allProducts'])->name('view.allproducts');
+
+Route::resource('coupons', CouponController::class);
+
 
 require __DIR__.'/auth.php';

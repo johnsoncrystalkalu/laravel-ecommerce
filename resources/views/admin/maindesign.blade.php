@@ -29,17 +29,7 @@
   <body>
     <header class="header">
       <nav class="navbar navbar-expand-lg">
-        <div class="search-panel">
-          <div class="search-inner d-flex align-items-center justify-content-center">
-            <div class="close-btn">Close <i class="fa fa-close"></i></div>
-            <form id="searchForm" action="#">
-              <div class="form-group">
-                <input type="search" name="search" placeholder="What are you searching for...">
-                <button type="submit" class="submit">Search</button>
-              </div>
-            </form>
-          </div>
-        </div>
+
         <div class="container-fluid d-flex align-items-center justify-content-between">
           <div class="navbar-header">
             <!-- Navbar Header--><a href="{{route('dashboard')}}" class="navbar-brand">
@@ -122,6 +112,14 @@
                       <li><a href="{{route('admin.addproduct')}}">Add Product</a></li>
                       <li><a href="{{route('admin.viewproduct')}}">View Product</a></li>
                       <li><a href="{{route('admin.viewcategory')}}">View Orders</a></li>
+                    </ul>
+                  </li>
+
+
+                <li><a href="#coupon" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Coupons </a>
+                    <ul id="coupon" class="collapse list-unstyled ">
+                      <li><a href="{{route('coupons.create')}}">Add Coupon</a></li>
+                      <li><a href="{{route('coupons.index')}}">View Coupon</a></li>
                     </ul>
                   </li>
     <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>

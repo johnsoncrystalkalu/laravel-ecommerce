@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +18,55 @@ class UserController extends Controller
     else{
        return view('dashboard');
     }
-
-
 }
+    public function home(){
+        $products = Product::latest()->take(4)->get();
+        if(Auth::check()){
+        $count_cart = ProductCart::where('user_id', Auth::id())->count();
+        }
+        else{
+            $count_cart ='';
+        }
+        return view('index', compact('products', 'count_cart'));
+    }
+
+    public function ProductDetails($id){
+        $product = Product::findOrFail($id);
+
+        $in_cart = ProductCart::where('user_id', Auth::id())
+        ->where('product_id', $id)->first();
+       // return $in_cart->id;
+        return view('product', compact('product', 'in_cart'));
+    }
+
+    public function allProducts(){
+        $products = Product::paginate(10);
+        return view ('allproducts', compact('products'));
+    }
+
+    public function addToCart($id){
+        $product = Product::findOrFail($id);
+        $product_cart = new ProductCart();
+        $product_cart->user_id = Auth::id();
+        $product_cart->product_id = $product->id;
+        $product_cart->save();
+        return redirect()->back()->with('message', 'cart added successfully');
+    }
+
+    public function cartProducts(){
+
+        $cart = ProductCart::where('user_id', Auth::id())->get();
+        return view('view_cart', compact('cart'));
+    }
+
+    public function deleteCart($id){
+        $cart = ProductCart::findOrFail($id);
+        if(Auth::id()==$cart->user_id){
+           $cart->delete();
+           return redirect()->back()->with('message', "Successfully removed");
+        }
+        else{
+            abort(402, 'Unathorized');
+        }
+    }
 }
