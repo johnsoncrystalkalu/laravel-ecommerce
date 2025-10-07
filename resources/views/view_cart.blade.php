@@ -57,6 +57,8 @@
                 <input type="text" name="reciever_address" placeholder="Enter address" class="form-control" required/>
                 <input type="text" name="reciever_phone" placeholder="Enter Phone" class="form-control mt-2" required/>
                 <input type="submit" name="submit" value="confirm order" class="btn btn-success mt-2"/>
+
+                <a href="{{route('stripe', $price)}}" class="btn btn-info">Pay now </a>
             </form>
         </div>
     </div>

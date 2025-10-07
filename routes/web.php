@@ -56,6 +56,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('myorders', [UserController::class, 'myOrders'])->name('myorders');
 
+    Route::controller(UserController::class)->group(function(){
+
+        Route::get('stripe/{price}', 'stripe')->name('stripe');
+        Route::post('stripe', 'stripePost')->name('stripe.post');
+
+    });
+
+
 });
 
 

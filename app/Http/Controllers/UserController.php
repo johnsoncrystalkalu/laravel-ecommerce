@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Stripe\Charge;
+use Stripe\Stripe;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -100,6 +103,38 @@ class UserController extends Controller
         $orders = Order::where('user_id',  Auth::id())->get();
 
         return view('myorders', compact('orders'));
+
+    }
+
+    public function stripe($price){
+
+        return view('stripe', compact('price'));
+
+    }
+
+
+
+    /**
+
+     * success response method.
+
+     *
+
+     * @return \Illuminate\Http\Response
+
+     */
+
+    public function stripePost(Request $request)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+        Charge::create ([
+                "amount" => 100 * 100,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Test payment from ."
+        ]);
+
+        return redirect()->back()->with('message', 'payment was successful');
 
     }
 
